@@ -538,7 +538,8 @@ html, body {
 .a4-document {
   width: 210mm;
   height: 297mm;
-  padding: 14mm 16mm;
+  max-height: 297mm;
+  padding: 12mm 15mm;
   background: #ffffff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   display: flex;
@@ -548,6 +549,8 @@ html, body {
   font-family: 'Plus Jakarta Sans', Arial, sans-serif;
   color: #222222;
   position: relative;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
 /* Document Top Area */

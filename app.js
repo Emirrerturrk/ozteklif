@@ -654,31 +654,46 @@ function downloadPdf() {
   const originalTransform = elements.previewWrapper.style.transform;
   elements.previewWrapper.style.transform = 'none';
 
+  // Temporarily strip box-shadow so html2canvas doesn't capture shadow pixels as document height
+  const originalShadow = elements.a4Document.style.boxShadow;
+  elements.a4Document.style.boxShadow = 'none';
+
   const quoteNoClean = (appState.quote.no || 'OZ-Teklif').replace(/[/\\?%*:|"<>]/g, '-');
   const clientNameClean = (appState.client.name || '').replace(/[/\\?%*:|"<>]/g, '-');
   const filename = `${quoteNoClean}_${clientNameClean || 'Musteri'}.pdf`;
 
   const opt = {
-    margin: [6, 10, 6, 10],
+    margin: 0,
     filename: filename,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: {
       scale: 2,
       useCORS: true,
       letterRendering: true,
-      logging: false
+      logging: false,
+      scrollY: 0,
+      scrollX: 0
     },
     jsPDF: {
       unit: 'mm',
       format: 'a4',
       orientation: 'portrait'
-    }
+    },
+    pagebreak: { mode: 'avoid-all' }
   };
 
-  html2pdf().set(opt).from(elements.a4Document).save().then(() => {
+  const worker = html2pdf().set(opt).from(elements.a4Document);
+  worker.toPdf().get('pdf').then((pdf) => {
+    // Guarantee strict 1-page output: delete any phantom page caused by sub-pixel rounding
+    while (pdf.internal.getNumberOfPages() > 1) {
+      pdf.deletePage(pdf.internal.getNumberOfPages());
+    }
+  }).save().then(() => {
+    elements.a4Document.style.boxShadow = originalShadow;
     elements.previewWrapper.style.transform = originalTransform;
     showToast(`PDF İndirildi: ${filename}`, 'success');
   }).catch(err => {
+    elements.a4Document.style.boxShadow = originalShadow;
     elements.previewWrapper.style.transform = originalTransform;
     console.error('PDF error:', err);
     showToast('Hata oluştu, Yazdır butonunu deneyin.', 'error');
