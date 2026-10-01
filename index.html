@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OZ Pilates - Hızlı Teklif & PDF</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
   <link rel="stylesheet" href="app.css">
 </head>
+
 <body>
 
   <!-- Top Navigation -->
@@ -19,30 +22,49 @@
       <img id="header-logo" src="assets/logo/logo.png" alt="OZ Pilates">
       <h1>OZ Pilates Teklif Sistemi</h1>
     </div>
-    
+
     <div class="header-actions">
       <button id="btn-new-quote" class="btn btn-secondary btn-sm" title="Yeni Teklif">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
         Yeni
       </button>
       <button id="btn-save-quote" class="btn btn-secondary btn-sm" title="Kaydet">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+          <polyline points="17 21 17 13 7 13 7 21" />
+        </svg>
         Kaydet
       </button>
       <button id="btn-open-history" class="btn btn-secondary btn-sm" title="Kayıtlı Teklifler">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
         Geçmiş
       </button>
       <button id="btn-export-excel" class="btn btn-secondary btn-sm" title="Excel İndir">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
         Excel
       </button>
       <button id="btn-print" class="btn btn-secondary btn-sm" title="Yazdır">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9" />
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+          <rect x="6" y="14" width="12" height="8" />
+        </svg>
         Yazdır
       </button>
       <button id="btn-download-pdf" class="btn btn-pdf">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
         PDF İNDİR
       </button>
     </div>
@@ -51,21 +73,27 @@
   <!-- Mobile Segmented Tab Navigation -->
   <nav class="mobile-tab-nav">
     <button id="tab-btn-form" class="mobile-tab-btn active" type="button">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+      </svg>
       Teklif Formu
     </button>
     <button id="tab-btn-preview" class="mobile-tab-btn" type="button">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
       A4 Önizleme
     </button>
   </nav>
 
   <!-- Workspace: 2-Columns, Zero Scroll -->
   <main class="app-container">
-    
+
     <!-- LEFT PANEL: Single Screen Form -->
     <div class="editor-panel">
-      
+
       <!-- 1. Müşteri & Teklif Üst Bilgileri -->
       <div class="c-box">
         <div class="c-box-title">
@@ -103,7 +131,8 @@
       <div class="c-box products-box">
         <div class="c-box-title">
           <span>Ürün Listesi (5 Ekipman)</span>
-          <label style="font-weight: 500; font-size: 11px; text-transform: none; display: flex; align-items: center; gap: 4px; cursor: pointer;">
+          <label
+            style="font-weight: 500; font-size: 11px; text-transform: none; display: flex; align-items: center; gap: 4px; cursor: pointer;">
             <input type="checkbox" id="toggle-show-images" checked>
             Görselleri göster
           </label>
@@ -131,7 +160,9 @@
             <span style="font-weight: 700; font-size: 12px; color: var(--primary-dark);">İndirim / İskonto:</span>
             <div style="display: flex; align-items: center; gap: 4px;">
               <span style="font-weight: 700; color: var(--primary);">%</span>
-              <input type="number" id="discount-percent-input" class="form-input" style="width: 58px; text-align: center; font-weight: 700; padding: 2px 4px;" min="0" max="100" step="0.5" value="0">
+              <input type="number" id="discount-percent-input" class="form-input"
+                style="width: 58px; text-align: center; font-weight: 700; padding: 2px 4px;" min="0" max="100"
+                step="0.5" value="0">
             </div>
           </div>
 
@@ -150,7 +181,6 @@
             <span style="font-size: 11px; color: var(--text-muted);">KDV Durumu:</span>
             <select id="vat-status" class="form-select" style="width: 140px; padding: 2px 6px; font-size: 11px;">
               <option value="exclusive" selected>KDV Hariç (+%20)</option>
-              <option value="inclusive">KDV Dahil</option>
               <option value="exempt">KDV'den Muaf (%0)</option>
             </select>
           </div>
@@ -174,7 +204,8 @@
             <span>GENEL TOPLAM:</span>
             <span id="sum-grand-total">₺ 0,00</span>
           </div>
-          <div style="font-size: 10px; color: var(--text-muted); font-style: italic; margin-top: 1px;" id="sum-in-words">
+          <div style="font-size: 10px; color: var(--text-muted); font-style: italic; margin-top: 1px;"
+            id="sum-in-words">
             Yazıyla: Sıfır Türk Lirası
           </div>
         </div>
@@ -193,7 +224,11 @@
         </div>
 
         <button id="btn-quick-pdf" class="btn btn-pdf" style="padding: 8px 16px; font-size: 13px;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
           TEKLİFİ PDF İNDİR
         </button>
       </div>
@@ -204,142 +239,144 @@
     <div class="preview-panel">
       <div class="preview-toolbar-compact">
         <button id="zoom-out" class="btn btn-secondary btn-sm btn-icon" title="Küçült">-</button>
-        <span id="zoom-level-text" style="font-size: 11px; font-weight: 700; min-width: 34px; text-align: center;">Fit</span>
+        <span id="zoom-level-text"
+          style="font-size: 11px; font-weight: 700; min-width: 34px; text-align: center;">Fit</span>
         <button id="zoom-in" class="btn btn-secondary btn-sm btn-icon" title="Büyüt">+</button>
-        <button id="zoom-fit" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 2px 6px;">Sığdır</button>
+        <button id="zoom-fit" class="btn btn-secondary btn-sm"
+          style="font-size: 11px; padding: 2px 6px;">Sığdır</button>
       </div>
 
       <div class="a4-viewport-container" id="a4-viewport">
         <div class="a4-scale-outer" id="a4-scale-outer">
           <div class="a4-document-wrapper" id="preview-wrapper">
             <div class="a4-document" id="a4-document-print">
-            
-            <!-- Top Client Info & Logo -->
-            <div>
-              <div class="doc-header">
-                <div class="doc-client-info">
-                  <div class="doc-info-row">
-                    <span class="doc-info-label">Kişi Kurum adı</span>
-                    <span class="doc-info-val" id="doc-client-name">: -</span>
+
+              <!-- Top Client Info & Logo -->
+              <div>
+                <div class="doc-header">
+                  <div class="doc-client-info">
+                    <div class="doc-info-row">
+                      <span class="doc-info-label">Kişi Kurum adı</span>
+                      <span class="doc-info-val" id="doc-client-name">: -</span>
+                    </div>
+                    <div class="doc-info-row">
+                      <span class="doc-info-label">Tel & Fax</span>
+                      <span class="doc-info-val" id="doc-client-phone">: -</span>
+                    </div>
+                    <div class="doc-info-row">
+                      <span class="doc-info-label">E-Mail</span>
+                      <span class="doc-info-val" id="doc-client-email">: -</span>
+                    </div>
+                    <div class="doc-info-row">
+                      <span class="doc-info-label">Adres</span>
+                      <span class="doc-info-val" id="doc-client-address">: -</span>
+                    </div>
                   </div>
-                  <div class="doc-info-row">
-                    <span class="doc-info-label">Tel & Fax</span>
-                    <span class="doc-info-val" id="doc-client-phone">: -</span>
-                  </div>
-                  <div class="doc-info-row">
-                    <span class="doc-info-label">E-Mail</span>
-                    <span class="doc-info-val" id="doc-client-email">: -</span>
-                  </div>
-                  <div class="doc-info-row">
-                    <span class="doc-info-label">Adres</span>
-                    <span class="doc-info-val" id="doc-client-address">: -</span>
+
+                  <div class="doc-logo-area">
+                    <img id="doc-logo-img" class="doc-logo-img" src="assets/logo/logo.png" alt="OZ Pilates">
                   </div>
                 </div>
 
-                <div class="doc-logo-area">
-                  <img id="doc-logo-img" class="doc-logo-img" src="assets/logo/logo.png" alt="OZ Pilates">
-                </div>
-              </div>
-
-              <!-- Meta Bar -->
-              <div class="doc-meta-bar">
-                <div class="doc-meta-item">
-                  <span class="doc-meta-label">Satış Temsilcisi:</span>
-                  <span class="doc-meta-value" id="doc-sales-rep">Satış Temsilcisi</span>
-                </div>
-                <div class="doc-meta-item">
-                  <span class="doc-meta-label">Teklif No:</span>
-                  <span class="doc-meta-value" id="doc-quote-no">OZ-2026-001</span>
-                </div>
-                <div class="doc-meta-item">
-                  <span class="doc-meta-label">Teklif Tarihi:</span>
-                  <span class="doc-meta-value" id="doc-quote-date">01.10.2026</span>
-                </div>
-              </div>
-
-              <!-- Subject & Greeting -->
-              <div class="doc-subject-row">
-                <span class="doc-subject-label">Konu :</span>
-                <span class="doc-subject-val" id="doc-quote-subject">Pilates Ekipmanları Teklifi</span>
-              </div>
-
-              <div class="doc-intro-box">
-                <p class="greeting" id="doc-client-greeting">Sayın Yetkili ;</p>
-                <p>Firmanız / Sizin için hazırlamış olduğumuz teklif aşağıda bilgilerinize sunulmuştur.</p>
-              </div>
-
-              <!-- Products Table -->
-              <div class="doc-table-container">
-                <table class="doc-table">
-                  <thead>
-                    <tr>
-                      <th style="width: 70px;">Ürün Kodu</th>
-                      <th>Ürün Açıklaması</th>
-                      <th class="col-image-header" style="width: 60px;">Ürün Görsel</th>
-                      <th style="width: 45px;">Miktar</th>
-                      <th style="width: 40px;">Birim</th>
-                      <th style="width: 85px;">Birim Fiyat</th>
-                      <th style="width: 95px;">Tutar</th>
-                    </tr>
-                  </thead>
-                  <tbody id="doc-table-body">
-                    <!-- Dynamic Rows -->
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Bottom Split: Terms on Left, Totals on Right -->
-              <div class="doc-bottom-section">
-                <div class="doc-terms-box">
-                  <div class="doc-terms-title">Teklif ile ilgili detaylar :</div>
-                  <ul class="doc-terms-list" id="doc-terms-list">
-                    <!-- Dynamic Terms -->
-                  </ul>
+                <!-- Meta Bar -->
+                <div class="doc-meta-bar">
+                  <div class="doc-meta-item">
+                    <span class="doc-meta-label">Satış Temsilcisi:</span>
+                    <span class="doc-meta-value" id="doc-sales-rep">Satış Temsilcisi</span>
+                  </div>
+                  <div class="doc-meta-item">
+                    <span class="doc-meta-label">Teklif No:</span>
+                    <span class="doc-meta-value" id="doc-quote-no">OZ-2026-001</span>
+                  </div>
+                  <div class="doc-meta-item">
+                    <span class="doc-meta-label">Teklif Tarihi:</span>
+                    <span class="doc-meta-value" id="doc-quote-date">01.10.2026</span>
+                  </div>
                 </div>
 
-                <div class="doc-totals-box">
-                  <table class="doc-totals-table">
-                    <tr>
-                      <td class="total-label">Toplam</td>
-                      <td class="total-val" id="doc-total-gross">₺ 0,00</td>
-                    </tr>
-                    <tr id="doc-discount-row">
-                      <td class="total-label">İskonto % <span id="doc-discount-rate">0</span></td>
-                      <td class="total-val" id="doc-discount-val">0,00 ₺</td>
-                    </tr>
-                    <tr>
-                      <td class="total-label">Tutar</td>
-                      <td class="total-val" id="doc-net-total">₺ 0,00</td>
-                    </tr>
-                    <tr>
-                      <td class="total-label">Kdv (%<span id="doc-vat-rate">20</span>)</td>
-                      <td class="total-val" id="doc-vat-val">₺ 0,00</td>
-                    </tr>
-                    <tr class="grand-total">
-                      <td class="total-label" style="color: #ffffff;">Toplam Tutar</td>
-                      <td class="total-val" style="color: #ffffff;" id="doc-grand-total">₺ 0,00</td>
-                    </tr>
+                <!-- Subject & Greeting -->
+                <div class="doc-subject-row">
+                  <span class="doc-subject-label">Konu :</span>
+                  <span class="doc-subject-val" id="doc-quote-subject">Pilates Ekipmanları Teklifi</span>
+                </div>
+
+                <div class="doc-intro-box">
+                  <p class="greeting" id="doc-client-greeting">Sayın Yetkili ;</p>
+                  <p>Firmanız / Sizin için hazırlamış olduğumuz teklif aşağıda bilgilerinize sunulmuştur.</p>
+                </div>
+
+                <!-- Products Table -->
+                <div class="doc-table-container">
+                  <table class="doc-table">
+                    <thead>
+                      <tr>
+                        <th style="width: 70px;">Ürün Kodu</th>
+                        <th>Ürün Açıklaması</th>
+                        <th class="col-image-header" style="width: 60px;">Ürün Görsel</th>
+                        <th style="width: 45px;">Miktar</th>
+                        <th style="width: 40px;">Birim</th>
+                        <th style="width: 85px;">Birim Fiyat</th>
+                        <th style="width: 95px;">Tutar</th>
+                      </tr>
+                    </thead>
+                    <tbody id="doc-table-body">
+                      <!-- Dynamic Rows -->
+                    </tbody>
                   </table>
                 </div>
-              </div>
-            </div>
 
-            <!-- Footer / Signature -->
-            <div class="doc-footer-area" id="doc-footer-section">
-              <div>
-                <p><strong>9404 OZ Pilates</strong></p>
-                <p>Pilates Ekipmanları İmalat & Satış</p>
-              </div>
-              <div class="doc-signature-block">
-                <div class="doc-signature-line"></div>
-                <div class="doc-signature-title">Teklifi Veren / Kaşe - İmza</div>
-              </div>
-            </div>
+                <!-- Bottom Split: Terms on Left, Totals on Right -->
+                <div class="doc-bottom-section">
+                  <div class="doc-terms-box">
+                    <div class="doc-terms-title">Teklif ile ilgili detaylar :</div>
+                    <ul class="doc-terms-list" id="doc-terms-list">
+                      <!-- Dynamic Terms -->
+                    </ul>
+                  </div>
 
+                  <div class="doc-totals-box">
+                    <table class="doc-totals-table">
+                      <tr>
+                        <td class="total-label">Toplam</td>
+                        <td class="total-val" id="doc-total-gross">₺ 0,00</td>
+                      </tr>
+                      <tr id="doc-discount-row">
+                        <td class="total-label">İskonto % <span id="doc-discount-rate">0</span></td>
+                        <td class="total-val" id="doc-discount-val">0,00 ₺</td>
+                      </tr>
+                      <tr>
+                        <td class="total-label">Tutar</td>
+                        <td class="total-val" id="doc-net-total">₺ 0,00</td>
+                      </tr>
+                      <tr>
+                        <td class="total-label">Kdv (%<span id="doc-vat-rate">20</span>)</td>
+                        <td class="total-val" id="doc-vat-val">₺ 0,00</td>
+                      </tr>
+                      <tr class="grand-total">
+                        <td class="total-label" style="color: #ffffff;">Toplam Tutar</td>
+                        <td class="total-val" style="color: #ffffff;" id="doc-grand-total">₺ 0,00</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Footer / Signature -->
+              <div class="doc-footer-area" id="doc-footer-section">
+                <div>
+                  <p><strong>9404 OZ Pilates</strong></p>
+                  <p>Pilates Ekipmanları İmalat & Satış</p>
+                </div>
+                <div class="doc-signature-block">
+                  <div class="doc-signature-line"></div>
+                  <div class="doc-signature-title">Teklifi Veren / Kaşe - İmza</div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
 
   </main>
@@ -368,7 +405,8 @@
         <button class="modal-close" id="history-modal-close">&times;</button>
       </div>
       <div class="modal-body">
-        <input type="text" id="history-search" class="form-input" placeholder="Teklif no veya müşteri ara..." style="margin-bottom: 12px;">
+        <input type="text" id="history-search" class="form-input" placeholder="Teklif no veya müşteri ara..."
+          style="margin-bottom: 12px;">
         <div id="history-list-container" style="display: flex; flex-direction: column; gap: 8px;">
           <!-- Filled by app.js -->
         </div>
@@ -385,4 +423,5 @@
   <script src="assets/catalog.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
