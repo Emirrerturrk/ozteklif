@@ -22,21 +22,21 @@ const formatNumber = (val) => {
 // Turkish Number to Words
 function numberToTurkishWords(amount) {
   if (isNaN(amount) || amount === 0) return 'Sıfır Türk Lirası';
-  
+
   const ones = ['', 'Bir', 'İki', 'Üç', 'Dört', 'Beş', 'Altı', 'Yedi', 'Sekiz', 'Dokuz'];
   const tens = ['', 'On', 'Yirmi', 'Otuz', 'Kırk', 'Elli', 'Altmış', 'Yetmiş', 'Seksen', 'Doksan'];
   const groups = ['', 'Bin', 'Milyon', 'Milyar', 'Trilyon'];
-  
+
   const [liraStr, kurusStr] = amount.toFixed(2).split('.');
   let lira = parseInt(liraStr, 10);
   let kurus = parseInt(kurusStr, 10);
-  
+
   function convertGroup(n) {
     let s = '';
     const h = Math.floor(n / 100);
     const t = Math.floor((n % 100) / 10);
     const o = n % 10;
-    
+
     if (h > 0) {
       if (h === 1) s += 'Yüz ';
       else s += ones[h] + ' Yüz ';
@@ -45,10 +45,10 @@ function numberToTurkishWords(amount) {
     if (o > 0) s += ones[o] + ' ';
     return s.trim();
   }
-  
+
   let result = '';
   let groupIndex = 0;
-  
+
   while (lira > 0) {
     const chunk = lira % 1000;
     if (chunk > 0) {
@@ -63,7 +63,7 @@ function numberToTurkishWords(amount) {
     lira = Math.floor(lira / 1000);
     groupIndex++;
   }
-  
+
   result = result.trim() + ' Türk Lirası';
   if (kurus > 0) {
     result += ' ' + convertGroup(kurus) + ' Kuruş';
@@ -143,9 +143,6 @@ const defaultState = {
   vatStatus: 'exclusive', // exclusive, inclusive, exempt
   vatRate: 20,
   terms: [
-    'Fiyatlara nakliye dahildir.',
-    'KDV HARİÇ fiyatlardır.',
-    'Ödeme ; Sipariş ile birlikte %50 , Teslimat öncesi %50',
     'Teslimat süresi: Sipariş onayından itibaren 15-20 iş günüdür.',
     'Teklifin geçerlilik süresi 15 gündür.'
   ],
@@ -166,32 +163,33 @@ const elements = {
   clientAddress: document.getElementById('client-address'),
   quoteNo: document.getElementById('quote-no'),
   quoteDate: document.getElementById('quote-date'),
-  
+
   toggleShowImages: document.getElementById('toggle-show-images'),
   productTableRows: document.getElementById('product-table-rows'),
-  
+
   discountPercentInput: document.getElementById('discount-percent-input'),
   presetChips: document.querySelectorAll('.preset-chip'),
   vatStatus: document.getElementById('vat-status'),
-  
+
   sumSubtotal: document.getElementById('sum-subtotal'),
   sumDiscountPct: document.getElementById('sum-discount-pct'),
   sumDiscountVal: document.getElementById('sum-discount-val'),
   sumVatVal: document.getElementById('sum-vat-val'),
   sumGrandTotal: document.getElementById('sum-grand-total'),
   sumInWords: document.getElementById('sum-in-words'),
-  
+
   toggleShowSignature: document.getElementById('toggle-show-signature'),
   btnEditTerms: document.getElementById('btn-edit-terms'),
   btnQuickPdf: document.getElementById('btn-quick-pdf'),
-  
+
   // Right Preview
   a4Viewport: document.getElementById('a4-viewport'),
+  a4ScaleOuter: document.getElementById('a4-scale-outer'),
   previewWrapper: document.getElementById('preview-wrapper'),
   a4Document: document.getElementById('a4-document-print'),
   headerLogo: document.getElementById('header-logo'),
   docLogoImg: document.getElementById('doc-logo-img'),
-  
+
   docClientName: document.getElementById('doc-client-name'),
   docClientPhone: document.getElementById('doc-client-phone'),
   docClientEmail: document.getElementById('doc-client-email'),
@@ -203,7 +201,7 @@ const elements = {
   docClientGreeting: document.getElementById('doc-client-greeting'),
   docTableBody: document.getElementById('doc-table-body'),
   docTermsList: document.getElementById('doc-terms-list'),
-  
+
   docTotalGross: document.getElementById('doc-total-gross'),
   docDiscountRow: document.getElementById('doc-discount-row'),
   docDiscountRate: document.getElementById('doc-discount-rate'),
@@ -213,24 +211,24 @@ const elements = {
   docVatVal: document.getElementById('doc-vat-val'),
   docGrandTotal: document.getElementById('doc-grand-total'),
   docFooterSection: document.getElementById('doc-footer-section'),
-  
+
   // Zoom
   zoomIn: document.getElementById('zoom-in'),
   zoomOut: document.getElementById('zoom-out'),
   zoomFit: document.getElementById('zoom-fit'),
   zoomLevelText: document.getElementById('zoom-level-text'),
-  
+
   // Modals
   termsModal: document.getElementById('terms-modal'),
   termsModalClose: document.getElementById('terms-modal-close'),
   termsListContainer: document.getElementById('terms-list-container'),
   btnAddTerm: document.getElementById('btn-add-term'),
-  
+
   historyModal: document.getElementById('history-modal'),
   historyModalClose: document.getElementById('history-modal-close'),
   historyListContainer: document.getElementById('history-list-container'),
   historySearch: document.getElementById('history-search'),
-  
+
   // Top Buttons
   btnNewQuote: document.getElementById('btn-new-quote'),
   btnSaveQuote: document.getElementById('btn-save-quote'),
@@ -238,7 +236,7 @@ const elements = {
   btnExportExcel: document.getElementById('btn-export-excel'),
   btnPrint: document.getElementById('btn-print'),
   btnDownloadPdf: document.getElementById('btn-download-pdf'),
-  
+
   toastContainer: document.getElementById('toast-container')
 };
 
@@ -274,11 +272,11 @@ function calculateFinancials() {
   const discountPercent = Number(appState.discountPercent) || 0;
   const discountAmount = grossTotal * (discountPercent / 100);
   const netSubtotal = Math.max(0, grossTotal - discountAmount);
-  
+
   const vatRate = appState.vatStatus === 'exempt' ? 0 : 20;
   let vatAmount = 0;
   let grandTotal = 0;
-  
+
   if (appState.vatStatus === 'exclusive') {
     vatAmount = netSubtotal * (vatRate / 100);
     grandTotal = netSubtotal + vatAmount;
@@ -289,7 +287,7 @@ function calculateFinancials() {
     vatAmount = 0;
     grandTotal = netSubtotal;
   }
-  
+
   return {
     grossTotal,
     discountPercent,
@@ -301,39 +299,43 @@ function calculateFinancials() {
   };
 }
 
-// Render Products in Left Table
+// Render Products in Left Table (Responsive Desktop Table / Mobile Card)
 function renderProductTable() {
   elements.productTableRows.innerHTML = '';
-  
+
   appState.products.forEach(p => {
     const tr = document.createElement('tr');
+    tr.className = 'p-item-row';
     if (!p.enabled) tr.classList.add('row-disabled');
-    
+
     const lineTotal = (Number(p.qty) || 0) * (Number(p.price) || 0);
-    
+
     tr.innerHTML = `
-      <td style="text-align: center;">
-        <input type="checkbox" class="prod-toggle" data-id="${p.id}" ${p.enabled ? 'checked' : ''} style="cursor: pointer;">
-      </td>
-      <td style="text-align: center;">
-        <img class="p-thumb" src="${p.image}" alt="${p.name}">
-      </td>
-      <td>
-        <div style="font-weight: 700; color: var(--text-main);">${p.name}</div>
-        <div style="font-size: 10px; color: var(--text-muted);">${p.code} (${p.unit})</div>
-      </td>
-      <td style="text-align: center;">
-        <div class="qty-stepper">
-          <button type="button" class="qty-btn" data-action="dec" data-id="${p.id}">-</button>
-          <input type="text" class="qty-val" data-id="${p.id}" value="${p.qty}">
-          <button type="button" class="qty-btn" data-action="inc" data-id="${p.id}">+</button>
+      <td class="col-product-main">
+        <div class="product-identity-flex">
+          <input type="checkbox" class="prod-toggle" data-id="${p.id}" ${p.enabled ? 'checked' : ''} title="Teklife Dahil Et">
+          <img class="p-thumb" src="${p.image}" alt="${p.name}">
+          <div class="product-titles">
+            <div class="p-name">${p.name}</div>
+            <div class="p-code">${p.code} • ${p.unit}</div>
+          </div>
         </div>
       </td>
-      <td style="text-align: right;">
-        <input type="number" class="form-input prod-price-input" data-id="${p.id}" value="${p.price}" style="width: 85px; text-align: right; padding: 2px 4px; font-weight: 500;" step="500">
-      </td>
-      <td style="text-align: right; font-weight: 700; color: var(--primary-dark);">
-        ${formatCurrency(lineTotal)}
+      <td class="col-product-actions">
+        <div class="product-actions-flex">
+          <div class="qty-stepper">
+            <button type="button" class="qty-btn" data-action="dec" data-id="${p.id}">-</button>
+            <input type="text" class="qty-val" data-id="${p.id}" value="${p.qty}">
+            <button type="button" class="qty-btn" data-action="inc" data-id="${p.id}">+</button>
+          </div>
+          <div class="price-input-wrap">
+            <input type="number" class="form-input prod-price-input" data-id="${p.id}" value="${p.price}" step="500">
+            <span class="currency-tag">₺</span>
+          </div>
+          <div class="line-total-badge">
+            ${formatCurrency(lineTotal)}
+          </div>
+        </div>
       </td>
     `;
     elements.productTableRows.appendChild(tr);
@@ -343,13 +345,13 @@ function renderProductTable() {
 // Update Live Preview (Right Panel)
 function updatePreview() {
   const fin = calculateFinancials();
-  
+
   // Client Info
   elements.docClientName.textContent = `: ${appState.client.name || '-'}`;
   elements.docClientPhone.textContent = `: ${appState.client.phone || '-'}`;
   elements.docClientEmail.textContent = `: -`;
   elements.docClientAddress.textContent = `: ${appState.client.address || '-'}`;
-  
+
   // Greeting
   if (appState.client.contact && appState.client.contact.trim() !== '') {
     elements.docClientGreeting.textContent = `${appState.client.contact.trim()} ;`;
@@ -358,28 +360,28 @@ function updatePreview() {
   } else {
     elements.docClientGreeting.textContent = 'Sayın Yetkili ;';
   }
-  
+
   // Meta Bar
   elements.docQuoteNo.textContent = appState.quote.no || '-';
   elements.docQuoteDate.textContent = formatDateTr(appState.quote.date);
   elements.docSalesRep.textContent = appState.quote.salesRep || 'Satış Temsilcisi';
   elements.docQuoteSubject.textContent = appState.quote.subject || '-';
-  
+
   // Table
   elements.docTableBody.innerHTML = '';
   const imgHeader = document.querySelector('.col-image-header');
   if (imgHeader) imgHeader.style.display = appState.options.showImages ? '' : 'none';
-  
+
   const activeProds = appState.products.filter(p => p.enabled && p.qty > 0);
   activeProds.forEach(p => {
     const tr = document.createElement('tr');
     const lineTotal = (Number(p.qty) || 0) * (Number(p.price) || 0);
-    
+
     let imgCol = '';
     if (appState.options.showImages) {
       imgCol = `<td class="col-img"><img src="${p.image}" alt="${p.name}"></td>`;
     }
-    
+
     tr.innerHTML = `
       <td class="col-code">${p.code}</td>
       <td class="col-desc">${p.name}</td>
@@ -391,7 +393,7 @@ function updatePreview() {
     `;
     elements.docTableBody.appendChild(tr);
   });
-  
+
   // Terms
   elements.docTermsList.innerHTML = '';
   appState.terms.forEach(term => {
@@ -401,7 +403,7 @@ function updatePreview() {
       elements.docTermsList.appendChild(li);
     }
   });
-  
+
   // Financials in Doc
   elements.docTotalGross.textContent = `${formatNumber(fin.grossTotal)} ₺`;
   elements.docDiscountRate.textContent = fin.discountPercent;
@@ -410,7 +412,7 @@ function updatePreview() {
   elements.docVatRate.textContent = fin.vatRate;
   elements.docVatVal.textContent = `${formatNumber(fin.vatAmount)} ₺`;
   elements.docGrandTotal.textContent = `${formatNumber(fin.grandTotal)} ₺`;
-  
+
   // Left Panel Financials
   elements.sumSubtotal.textContent = formatCurrency(fin.grossTotal);
   elements.sumDiscountPct.textContent = fin.discountPercent;
@@ -418,36 +420,52 @@ function updatePreview() {
   elements.sumVatVal.textContent = formatCurrency(fin.vatAmount);
   elements.sumGrandTotal.textContent = formatCurrency(fin.grandTotal);
   elements.sumInWords.textContent = `Yazıyla: ${numberToTurkishWords(fin.grandTotal)}`;
-  
+
   // Signature Toggle
   elements.docFooterSection.style.display = appState.options.showSignature ? 'flex' : 'none';
 }
 
-// Auto-Fit Zoom: Fits entire A4 sheet inside right container with ZERO scrolling!
+// Auto-Fit Zoom: Fits entire A4 sheet inside container with ZERO horizontal clipping!
 let manualZoom = null;
 function autoFitA4() {
   const container = elements.a4Viewport;
   if (!container) return;
-  
-  if (manualZoom !== null) {
-    elements.previewWrapper.style.transform = `scale(${manualZoom / 100})`;
-    elements.zoomLevelText.textContent = `${manualZoom}%`;
-    return;
-  }
-  
-  const containerW = container.clientWidth - 24;
+
+  const isMobile = window.innerWidth <= 960;
+  const availW = (container.clientWidth > 0 ? container.clientWidth : window.innerWidth) - (isMobile ? 20 : 28);
   const containerH = container.clientHeight - 55;
-  
+
   // A4 dimensions in px approx (210mm x 297mm at standard ratio 1 : 1.414)
   const a4W = 794;
   const a4H = 1123;
-  
-  const scaleW = containerW / a4W;
-  const scaleH = containerH / a4H;
-  const scale = Math.min(scaleW, scaleH);
-  
+
+  let scale;
+  if (manualZoom !== null) {
+    scale = manualZoom / 100;
+  } else {
+    const scaleW = availW / a4W;
+    const scaleH = containerH / a4H;
+    scale = isMobile ? scaleW : Math.min(scaleW, scaleH);
+  }
+
+  scale = Math.max(0.2, scale);
+
   const zoomPct = Math.floor(scale * 100);
+  const scaledW = Math.round(a4W * scale);
+  const scaledH = Math.round(a4H * scale);
+
+  if (elements.a4ScaleOuter) {
+    elements.a4ScaleOuter.style.width = `${scaledW}px`;
+    elements.a4ScaleOuter.style.height = `${scaledH}px`;
+    elements.a4ScaleOuter.style.margin = '0 auto';
+  }
+
   elements.previewWrapper.style.transform = `scale(${scale})`;
+  elements.previewWrapper.style.transformOrigin = 'top left';
+  elements.previewWrapper.style.position = 'absolute';
+  elements.previewWrapper.style.top = '0';
+  elements.previewWrapper.style.left = '0';
+
   elements.zoomLevelText.textContent = `${zoomPct}%`;
 }
 
@@ -467,11 +485,11 @@ function setDiscount(pct) {
   const val = Math.max(0, Math.min(100, parseFloat(pct) || 0));
   appState.discountPercent = val;
   elements.discountPercentInput.value = val;
-  
+
   elements.presetChips.forEach(chip => {
     chip.classList.toggle('active', Number(chip.dataset.percent) === val);
   });
-  
+
   updatePreview();
 }
 
@@ -517,7 +535,7 @@ elements.productTableRows.addEventListener('input', (e) => {
   const id = target.dataset.id;
   const prod = appState.products.find(p => p.id === id);
   if (!prod) return;
-  
+
   if (target.classList.contains('qty-val')) {
     prod.qty = Math.max(0, parseInt(target.value, 10) || 0);
     renderProductTable();
@@ -532,12 +550,12 @@ elements.productTableRows.addEventListener('input', (e) => {
 elements.productTableRows.addEventListener('click', (e) => {
   const btn = e.target.closest('button[data-action]');
   if (!btn) return;
-  
+
   const id = btn.dataset.id;
   const action = btn.dataset.action;
   const prod = appState.products.find(p => p.id === id);
   if (!prod) return;
-  
+
   if (action === 'inc') {
     prod.qty += 1;
     prod.enabled = true;
@@ -632,14 +650,14 @@ elements.btnAddTerm.addEventListener('click', () => {
 // PDF Generation
 function downloadPdf() {
   showToast('PDF hazırlanıyor, lütfen bekleyin...', 'info');
-  
+
   const originalTransform = elements.previewWrapper.style.transform;
   elements.previewWrapper.style.transform = 'none';
-  
+
   const quoteNoClean = (appState.quote.no || 'OZ-Teklif').replace(/[/\\?%*:|"<>]/g, '-');
   const clientNameClean = (appState.client.name || '').replace(/[/\\?%*:|"<>]/g, '-');
   const filename = `${quoteNoClean}_${clientNameClean || 'Musteri'}.pdf`;
-  
+
   const opt = {
     margin: [6, 10, 6, 10],
     filename: filename,
@@ -656,7 +674,7 @@ function downloadPdf() {
       orientation: 'portrait'
     }
   };
-  
+
   html2pdf().set(opt).from(elements.a4Document).save().then(() => {
     elements.previewWrapper.style.transform = originalTransform;
     showToast(`PDF İndirildi: ${filename}`, 'success');
@@ -675,7 +693,7 @@ elements.btnPrint.addEventListener('click', () => window.print());
 elements.btnExportExcel.addEventListener('click', () => {
   if (typeof XLSX === 'undefined') return;
   const fin = calculateFinancials();
-  
+
   const wsData = [
     ['', '', 'Kişi Kurum adı      :', appState.client.name],
     ['', '', 'Tel & Fax                  :', appState.client.phone],
@@ -686,18 +704,18 @@ elements.btnExportExcel.addEventListener('click', () => {
     ['', '', 'Firmanız / Sizin için hazırlamış olduğumuz teklif aşağıda bilgilerinize sunulmuştur.'],
     ['', '', 'Ürün Kodu', 'Ürün Açıklaması', 'Miktar', 'Birim', 'Birim Fiyat', 'Tutar']
   ];
-  
+
   const activeProds = appState.products.filter(p => p.enabled && p.qty > 0);
   activeProds.forEach(p => {
     wsData.push(['', '', p.code, p.name, p.qty, p.unit, p.price, p.qty * p.price]);
   });
-  
+
   wsData.push(['', '', '', '', '', '', 'Toplam', fin.grossTotal]);
   wsData.push(['', '', '', '', '', '', `İskonto % ${fin.discountPercent}`, fin.discountAmount]);
   wsData.push(['', '', '', '', '', '', 'Tutar', fin.netSubtotal]);
   wsData.push(['', '', '', '', '', '', `Kdv (%${fin.vatRate})`, fin.vatAmount]);
   wsData.push(['', '', '', '', '', '', 'Toplam Tutar', fin.grandTotal]);
-  
+
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(wsData);
   XLSX.utils.book_append_sheet(wb, ws, 'Teklif');
@@ -710,7 +728,7 @@ elements.btnSaveQuote.addEventListener('click', () => {
   const quotes = JSON.parse(localStorage.getItem('oz_saved_quotes') || '[]');
   const existingIdx = quotes.findIndex(q => q.quote.no === appState.quote.no);
   const item = { ...appState, savedAt: new Date().toISOString() };
-  
+
   if (existingIdx >= 0) {
     quotes[existingIdx] = item;
     showToast(`Teklif "${appState.quote.no}" güncellendi.`, 'success');
@@ -725,14 +743,14 @@ function renderHistory(filter = '') {
   elements.historyListContainer.innerHTML = '';
   const quotes = JSON.parse(localStorage.getItem('oz_saved_quotes') || '[]');
   const filtered = quotes.filter(q => `${q.quote.no} ${q.client.name}`.toLowerCase().includes(filter.toLowerCase()));
-  
+
   if (filtered.length === 0) {
     elements.historyListContainer.innerHTML = '<div style="text-align:center; padding:15px; color:#999;">Kayıt bulunamadı.</div>';
     return;
   }
-  
+
   filtered.forEach(q => {
-    const fin = q.products ? q.products.filter(p=>p.enabled).reduce((acc,p)=>acc+(p.qty*p.price),0) : 0;
+    const fin = q.products ? q.products.filter(p => p.enabled).reduce((acc, p) => acc + (p.qty * p.price), 0) : 0;
     const card = document.createElement('div');
     card.style.background = '#f9fafb';
     card.style.border = '1px solid #e5e7eb';
@@ -741,7 +759,7 @@ function renderHistory(filter = '') {
     card.style.display = 'flex';
     card.style.justifyContent = 'space-between';
     card.style.alignItems = 'center';
-    
+
     card.innerHTML = `
       <div>
         <strong style="color: var(--primary-dark); font-size: 13px;">${q.quote.no} - ${q.client.name || 'İsimsiz'}</strong>
@@ -797,7 +815,7 @@ elements.btnNewQuote.addEventListener('click', () => {
   let next = 1;
   const match = cur.match(/OZ-(\d{4})-(\d+)/);
   if (match) next = parseInt(match[2], 10) + 1;
-  
+
   appState = JSON.parse(JSON.stringify(defaultState));
   appState.quote.no = `OZ-2026-${String(next).padStart(3, '0')}`;
   initState();
@@ -814,22 +832,22 @@ window.addEventListener('click', (e) => {
 function parseQueryParams() {
   const params = new URLSearchParams(window.location.search);
   if (!params.toString()) return;
-  
+
   if (params.get('name')) appState.client.name = params.get('name');
   if (params.get('contact')) appState.client.contact = params.get('contact');
   if (params.get('phone')) appState.client.phone = params.get('phone');
   if (params.get('address')) appState.client.address = params.get('address');
   if (params.get('quoteNo')) appState.quote.no = params.get('quoteNo');
-  
+
   if (params.get('discount')) {
     const d = parseFloat(params.get('discount'));
     if (!isNaN(d)) appState.discountPercent = d;
   }
-  
+
   if (params.get('vatStatus')) {
     appState.vatStatus = params.get('vatStatus');
   }
-  
+
   // Format: products=OZ1001:2,OZ1003:1 or products=OZ1001,OZ1003
   const prodsParam = params.get('products');
   if (prodsParam) {
@@ -840,7 +858,7 @@ function parseQueryParams() {
       const qty = parts.length > 1 ? parseInt(parts[1], 10) || 1 : 1;
       requested[code] = qty;
     });
-    
+
     appState.products.forEach(p => {
       if (requested[p.code.toUpperCase()] !== undefined) {
         p.enabled = true;
@@ -855,26 +873,48 @@ function parseQueryParams() {
 // Initialize
 function initState() {
   parseQueryParams();
-  
+
   elements.clientName.value = appState.client.name;
   elements.clientContact.value = appState.client.contact;
   elements.clientPhone.value = appState.client.phone;
   elements.clientAddress.value = appState.client.address;
   elements.quoteNo.value = appState.quote.no;
   elements.quoteDate.value = appState.quote.date;
-  
+
   elements.discountPercentInput.value = appState.discountPercent;
   elements.presetChips.forEach(chip => {
     chip.classList.toggle('active', Number(chip.dataset.percent) === Number(appState.discountPercent));
   });
-  
+
   elements.vatStatus.value = appState.vatStatus;
   elements.toggleShowImages.checked = appState.options.showImages;
   elements.toggleShowSignature.checked = appState.options.showSignature;
-  
+
   renderProductTable();
   updatePreview();
   setTimeout(autoFitA4, 100);
 }
+
+// Mobile Tab Switcher
+const tabBtnForm = document.getElementById('tab-btn-form');
+const tabBtnPreview = document.getElementById('tab-btn-preview');
+
+function setMobileView(view) {
+  document.body.classList.remove('view-form', 'view-preview');
+  document.body.classList.add(view === 'preview' ? 'view-preview' : 'view-form');
+
+  if (tabBtnForm) tabBtnForm.classList.toggle('active', view !== 'preview');
+  if (tabBtnPreview) tabBtnPreview.classList.toggle('active', view === 'preview');
+
+  if (view === 'preview') {
+    setTimeout(autoFitA4, 80);
+  }
+}
+
+if (tabBtnForm) tabBtnForm.addEventListener('click', () => setMobileView('form'));
+if (tabBtnPreview) tabBtnPreview.addEventListener('click', () => setMobileView('preview'));
+
+// Default state is form view on mobile
+document.body.classList.add('view-form');
 
 initState();
