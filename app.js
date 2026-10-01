@@ -508,8 +508,6 @@ elements.vatStatus.addEventListener('change', (e) => {
   appState.vatStatus = e.target.value;
   if (appState.vatStatus === 'inclusive') {
     appState.terms[1] = 'Fiyatlara KDV DAHİLDİR.';
-  } else if (appState.vatStatus === 'exclusive') {
-    appState.terms[1] = 'KDV HARİÇ fiyatlardır.';
   } else {
     appState.terms[1] = 'KDV’den muaftır.';
   }
