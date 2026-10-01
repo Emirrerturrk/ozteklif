@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OZ Pilates - Hızlı Teklif & PDF</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="app-header">
+    <div class="header-brand">
+      <img id="header-logo" src="assets/logo/logo.png" alt="OZ Pilates">
+      <h1>OZ Pilates Teklif Sistemi</h1>
+    </div>
+    
+    <div class="header-actions">
+      <button id="btn-new-quote" class="btn btn-secondary btn-sm" title="Yeni Teklif">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Yeni
+      </button>
+      <button id="btn-save-quote" class="btn btn-secondary btn-sm" title="Kaydet">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+        Kaydet
+      </button>
+      <button id="btn-open-history" class="btn btn-secondary btn-sm" title="Kayıtlı Teklifler">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Geçmiş
+      </button>
+      <button id="btn-export-excel" class="btn btn-secondary btn-sm" title="Excel İndir">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Excel
+      </button>
+      <button id="btn-print" class="btn btn-secondary btn-sm" title="Yazdır">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Yazdır
+      </button>
+      <button id="btn-download-pdf" class="btn btn-pdf">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        PDF İNDİR
+      </button>
+    </div>
+  </header>
+
+  <!-- Workspace: 2-Columns, Zero Scroll -->
+  <main class="app-container">
+    
+    <!-- LEFT PANEL: Single Screen Form -->
+    <div class="editor-panel">
+      
+      <!-- 1. Müşteri & Teklif Üst Bilgileri -->
+      <div class="c-box">
+        <div class="c-box-title">
+          <span>Müşteri & Teklif Bilgileri</span>
+        </div>
+        <div class="client-grid">
+          <div>
+            <div class="field-label">Kişi / Kurum Adı</div>
+            <input type="text" id="client-name" class="form-input" placeholder="Örn: Pilates Akademi Stüdyosu">
+          </div>
+          <div>
+            <div class="field-label">Yetkili (Hitap)</div>
+            <input type="text" id="client-contact" class="form-input" placeholder="Örn: Sayın Ayşe Hanım">
+          </div>
+          <div>
+            <div class="field-label">Telefon & Faks</div>
+            <input type="text" id="client-phone" class="form-input" placeholder="Örn: 0532 123 45 67">
+          </div>
+          <div>
+            <div class="field-label">Adres / Şehir</div>
+            <input type="text" id="client-address" class="form-input" placeholder="Örn: Kadıköy / İstanbul">
+          </div>
+          <div>
+            <div class="field-label">Teklif No</div>
+            <input type="text" id="quote-no" class="form-input" value="OZ-2026-001">
+          </div>
+          <div>
+            <div class="field-label">Tarih</div>
+            <input type="date" id="quote-date" class="form-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 5 Standart Ürün Tablosu (Kompakt ve Net) -->
+      <div class="c-box products-box">
+        <div class="c-box-title">
+          <span>Ürün Listesi (5 Ekipman)</span>
+          <label style="font-weight: 500; font-size: 11px; text-transform: none; display: flex; align-items: center; gap: 4px; cursor: pointer;">
+            <input type="checkbox" id="toggle-show-images" checked>
+            Görselleri göster
+          </label>
+        </div>
+
+        <div class="p-table-container">
+          <table class="p-table">
+            <thead>
+              <tr>
+                <th style="width: 32px; text-align: center;">Ekle</th>
+                <th style="width: 40px; text-align: center;">Görsel</th>
+                <th>Ürün Adı & Kodu</th>
+                <th style="width: 80px; text-align: center;">Miktar</th>
+                <th style="width: 95px; text-align: right;">Birim Fiyat</th>
+                <th style="width: 105px; text-align: right;">Tutar</th>
+              </tr>
+            </thead>
+            <tbody id="product-table-rows">
+              <!-- Rendered by app.js (Cadillac, Tower, Reformer, Barrel, Chair) -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 3. İskonto & Finansal Hesaplama (Kullanıcının En Önem Verdiği Bölüm) -->
+      <div class="finance-box">
+        <div class="discount-controls">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+            <span style="font-weight: 700; font-size: 12px; color: var(--primary-dark);">İndirim / İskonto:</span>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <span style="font-weight: 700; color: var(--primary);">%</span>
+              <input type="number" id="discount-percent-input" class="form-input" style="width: 58px; text-align: center; font-weight: 700; padding: 2px 4px;" min="0" max="100" step="0.5" value="0">
+            </div>
+          </div>
+
+          <!-- Quick Discount Buttons -->
+          <div class="preset-group">
+            <button type="button" class="preset-chip active" data-percent="0">%0</button>
+            <button type="button" class="preset-chip" data-percent="5">%5</button>
+            <button type="button" class="preset-chip" data-percent="10">%10</button>
+            <button type="button" class="preset-chip" data-percent="15">%15</button>
+            <button type="button" class="preset-chip" data-percent="20">%20</button>
+            <button type="button" class="preset-chip" data-percent="25">%25</button>
+          </div>
+
+          <!-- VAT Setting -->
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 4px;">
+            <span style="font-size: 11px; color: var(--text-muted);">KDV Durumu:</span>
+            <select id="vat-status" class="form-select" style="width: 140px; padding: 2px 6px; font-size: 11px;">
+              <option value="exclusive" selected>KDV Hariç (+%20)</option>
+              <option value="inclusive">KDV Dahil</option>
+              <option value="exempt">KDV'den Muaf (%0)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Financial Summary -->
+        <div class="finance-summary">
+          <div class="f-row">
+            <span>Liste Toplamı:</span>
+            <span id="sum-subtotal">₺ 0,00</span>
+          </div>
+          <div class="f-row discount-text">
+            <span>İskonto (<span id="sum-discount-pct">0</span>%):</span>
+            <span id="sum-discount-val">- ₺ 0,00</span>
+          </div>
+          <div class="f-row">
+            <span>KDV Tutarı:</span>
+            <span id="sum-vat-val">₺ 0,00</span>
+          </div>
+          <div class="f-row grand-total">
+            <span>GENEL TOPLAM:</span>
+            <span id="sum-grand-total">₺ 0,00</span>
+          </div>
+          <div style="font-size: 10px; color: var(--text-muted); font-style: italic; margin-top: 1px;" id="sum-in-words">
+            Yazıyla: Sıfır Türk Lirası
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Alt Kontroller & Hızlı Buton -->
+      <div class="bottom-controls">
+        <div style="display: flex; gap: 12px; align-items: center; font-size: 11px; color: var(--text-muted);">
+          <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+            <input type="checkbox" id="toggle-show-signature" checked>
+            İmza / Kaşe Alanı
+          </label>
+          <button id="btn-edit-terms" class="btn btn-secondary btn-sm" type="button" style="padding: 2px 8px;">
+            Şartları Düzenle
+          </button>
+        </div>
+
+        <button id="btn-quick-pdf" class="btn btn-pdf" style="padding: 8px 16px; font-size: 13px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          TEKLİFİ PDF İNDİR
+        </button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT PANEL: Live A4 Preview (Fit to Viewport) -->
+    <div class="preview-panel">
+      <div class="preview-toolbar-compact">
+        <button id="zoom-out" class="btn btn-secondary btn-sm btn-icon" title="Küçült">-</button>
+        <span id="zoom-level-text" style="font-size: 11px; font-weight: 700; min-width: 34px; text-align: center;">Fit</span>
+        <button id="zoom-in" class="btn btn-secondary btn-sm btn-icon" title="Büyüt">+</button>
+        <button id="zoom-fit" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 2px 6px;">Sığdır</button>
+      </div>
+
+      <div class="a4-viewport-container" id="a4-viewport">
+        <div class="a4-document-wrapper" id="preview-wrapper">
+          <div class="a4-document" id="a4-document-print">
+            
+            <!-- Top Client Info & Logo -->
+            <div>
+              <div class="doc-header">
+                <div class="doc-client-info">
+                  <div class="doc-info-row">
+                    <span class="doc-info-label">Kişi Kurum adı</span>
+                    <span class="doc-info-val" id="doc-client-name">: -</span>
+                  </div>
+                  <div class="doc-info-row">
+                    <span class="doc-info-label">Tel & Fax</span>
+                    <span class="doc-info-val" id="doc-client-phone">: -</span>
+                  </div>
+                  <div class="doc-info-row">
+                    <span class="doc-info-label">E-Mail</span>
+                    <span class="doc-info-val" id="doc-client-email">: -</span>
+                  </div>
+                  <div class="doc-info-row">
+                    <span class="doc-info-label">Adres</span>
+                    <span class="doc-info-val" id="doc-client-address">: -</span>
+                  </div>
+                </div>
+
+                <div class="doc-logo-area">
+                  <img id="doc-logo-img" class="doc-logo-img" src="assets/logo/logo.png" alt="OZ Pilates">
+                </div>
+              </div>
+
+              <!-- Meta Bar -->
+              <div class="doc-meta-bar">
+                <div class="doc-meta-item">
+                  <span class="doc-meta-label">Satış Temsilcisi:</span>
+                  <span class="doc-meta-value" id="doc-sales-rep">Satış Temsilcisi</span>
+                </div>
+                <div class="doc-meta-item">
+                  <span class="doc-meta-label">Teklif No:</span>
+                  <span class="doc-meta-value" id="doc-quote-no">OZ-2026-001</span>
+                </div>
+                <div class="doc-meta-item">
+                  <span class="doc-meta-label">Teklif Tarihi:</span>
+                  <span class="doc-meta-value" id="doc-quote-date">01.10.2026</span>
+                </div>
+              </div>
+
+              <!-- Subject & Greeting -->
+              <div class="doc-subject-row">
+                <span class="doc-subject-label">Konu :</span>
+                <span class="doc-subject-val" id="doc-quote-subject">Pilates Ekipmanları Teklifi</span>
+              </div>
+
+              <div class="doc-intro-box">
+                <p class="greeting" id="doc-client-greeting">Sayın Yetkili ;</p>
+                <p>Firmanız / Sizin için hazırlamış olduğumuz teklif aşağıda bilgilerinize sunulmuştur.</p>
+              </div>
+
+              <!-- Products Table -->
+              <div class="doc-table-container">
+                <table class="doc-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 70px;">Ürün Kodu</th>
+                      <th>Ürün Açıklaması</th>
+                      <th class="col-image-header" style="width: 60px;">Ürün Görsel</th>
+                      <th style="width: 45px;">Miktar</th>
+                      <th style="width: 40px;">Birim</th>
+                      <th style="width: 85px;">Birim Fiyat</th>
+                      <th style="width: 95px;">Tutar</th>
+                    </tr>
+                  </thead>
+                  <tbody id="doc-table-body">
+                    <!-- Dynamic Rows -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Bottom Split: Terms on Left, Totals on Right -->
+              <div class="doc-bottom-section">
+                <div class="doc-terms-box">
+                  <div class="doc-terms-title">Teklif ile ilgili detaylar :</div>
+                  <ul class="doc-terms-list" id="doc-terms-list">
+                    <!-- Dynamic Terms -->
+                  </ul>
+                </div>
+
+                <div class="doc-totals-box">
+                  <table class="doc-totals-table">
+                    <tr>
+                      <td class="total-label">Toplam</td>
+                      <td class="total-val" id="doc-total-gross">₺ 0,00</td>
+                    </tr>
+                    <tr id="doc-discount-row">
+                      <td class="total-label">İskonto % <span id="doc-discount-rate">0</span></td>
+                      <td class="total-val" id="doc-discount-val">0,00 ₺</td>
+                    </tr>
+                    <tr>
+                      <td class="total-label">Tutar</td>
+                      <td class="total-val" id="doc-net-total">₺ 0,00</td>
+                    </tr>
+                    <tr>
+                      <td class="total-label">Kdv (%<span id="doc-vat-rate">20</span>)</td>
+                      <td class="total-val" id="doc-vat-val">₺ 0,00</td>
+                    </tr>
+                    <tr class="grand-total">
+                      <td class="total-label" style="color: #ffffff;">Toplam Tutar</td>
+                      <td class="total-val" style="color: #ffffff;" id="doc-grand-total">₺ 0,00</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer / Signature -->
+            <div class="doc-footer-area" id="doc-footer-section">
+              <div>
+                <p><strong>9404 OZ Pilates</strong></p>
+                <p>Pilates Ekipmanları İmalat & Satış</p>
+              </div>
+              <div class="doc-signature-block">
+                <div class="doc-signature-line"></div>
+                <div class="doc-signature-title">Teklifi Veren / Kaşe - İmza</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL: Terms Editor -->
+  <div class="modal-overlay" id="terms-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">Teklif Şartlarını Düzenle</div>
+        <button class="modal-close" id="terms-modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="terms-list-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Filled by app.js -->
+        </div>
+        <button id="btn-add-term" class="btn btn-secondary btn-sm" style="margin-top: 10px;">+ Yeni Madde Ekle</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Saved Quotes History -->
+  <div class="modal-overlay" id="history-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">Kayıtlı Teklifler</div>
+        <button class="modal-close" id="history-modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="history-search" class="form-input" placeholder="Teklif no veya müşteri ara..." style="margin-bottom: 12px;">
+        <div id="history-list-container" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Filled by app.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="assets/vendor/html2pdf.bundle.min.js"></script>
+  <script src="assets/vendor/xlsx.full.min.js"></script>
+  <script src="assets/catalog.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

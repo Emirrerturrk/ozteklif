@@ -1,0 +1,11 @@
+{
+  "name": "ozteklif",
+  "version": "1.0.0",
+  "description": "OZ Pilates - Teklif Yönetim ve Otomatik PDF Sistemi",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["pilates", "quotation", "pdf", "teklif"],
+  "author": "OZ Pilates",
+  "license": "MIT"
+}
