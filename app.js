@@ -267,8 +267,8 @@ function calculateFinancials() {
   const grossTotal = activeProducts.reduce((acc, p) => acc + (Number(p.qty) || 0) * (Number(p.price) || 0), 0);
   const discountPercent = Number(appState.discountPercent) || 0;
   const discountAmount = grossTotal * (discountPercent / 100);
-  // Teklifteki toplamlar iskontosuz hesaplanir; iskonto yalnizca birim fiyat sutununda gorunur
-  const netSubtotal = grossTotal;
+  // Alt toplamlar iskontolu Toplam sutunu uzerinden hesaplanir
+  const netSubtotal = Math.max(0, grossTotal - discountAmount);
 
   const vatRate = appState.vatStatus === 'exempt' ? 0 : 20;
   let vatAmount = 0;
@@ -410,7 +410,7 @@ function updatePreview() {
   });
 
   // Financials in Doc
-  elements.docTotalGross.textContent = `${formatNumber(fin.grossTotal)} ₺`;
+  elements.docTotalGross.textContent = `${formatNumber(fin.netSubtotal)} ₺`;
   elements.docVatRate.textContent = fin.vatRate;
   elements.docVatVal.textContent = `${formatNumber(fin.vatAmount)} ₺`;
   elements.docGrandTotal.textContent = `${formatNumber(fin.grandTotal)} ₺`;
@@ -726,7 +726,7 @@ elements.btnExportExcel.addEventListener('click', () => {
     wsData.push(['', '', p.code, p.name, p.qty, p.unit, p.price, p.qty * p.price, dp, dp * p.qty]);
   });
 
-  wsData.push(['', '', '', '', '', '', 'Toplam', fin.grossTotal]);
+  wsData.push(['', '', '', '', '', '', 'Tutar', fin.netSubtotal]);
   wsData.push(['', '', '', '', '', '', `Kdv (%${fin.vatRate})`, fin.vatAmount]);
   wsData.push(['', '', '', '', '', '', 'Toplam Tutar', fin.grandTotal]);
 
