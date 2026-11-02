@@ -368,11 +368,17 @@ function updatePreview() {
   elements.docTableBody.innerHTML = '';
   const imgHeader = document.querySelector('.col-image-header');
   if (imgHeader) imgHeader.style.display = appState.options.showImages ? '' : 'none';
+  const discHeader = document.getElementById('doc-th-disc-price');
+  if (discHeader) {
+    const pct = Number(appState.discountPercent) || 0;
+    discHeader.textContent = `${pct > 0 ? `%${pct} ` : ''}İskontolu Birim Fiyat`;
+  }
 
   const activeProds = appState.products.filter(p => p.enabled && p.qty > 0);
   activeProds.forEach(p => {
     const tr = document.createElement('tr');
     const lineTotal = (Number(p.qty) || 0) * (Number(p.price) || 0);
+    const discPrice = (Number(p.price) || 0) * (1 - (Number(appState.discountPercent) || 0) / 100);
 
     let imgCol = '';
     if (appState.options.showImages) {
@@ -386,8 +392,9 @@ function updatePreview() {
       <td class="col-qty">${p.qty}</td>
       <td class="col-unit">${p.unit}</td>
       <td class="col-price">${formatNumber(p.price)} ₺</td>
-      <td class="col-price">${formatNumber((Number(p.price) || 0) * (1 - (Number(appState.discountPercent) || 0) / 100))} ₺</td>
       <td class="col-total">${formatNumber(lineTotal)} ₺</td>
+      <td class="col-price">${formatNumber(discPrice)} ₺</td>
+      <td class="col-total">${formatNumber(discPrice * (Number(p.qty) || 0))} ₺</td>
     `;
     elements.docTableBody.appendChild(tr);
   });
@@ -710,12 +717,13 @@ elements.btnExportExcel.addEventListener('click', () => {
     ['', '', 'Konu                 :', appState.quote.subject],
     ['', '', 'Sayın Yetkili ;'],
     ['', '', 'Firmanız / Sizin için hazırlamış olduğumuz teklif aşağıda bilgilerinize sunulmuştur.'],
-    ['', '', 'Ürün Kodu', 'Ürün Açıklaması', 'Miktar', 'Birim', 'Birim Fiyat', 'İskontolu Birim Fiyat', 'Tutar']
+    ['', '', 'Ürün Kodu', 'Ürün Açıklaması', 'Miktar', 'Birim', 'Birim Fiyat', 'Tutar', `%${appState.discountPercent} İskontolu Birim Fiyat`, 'Toplam']
   ];
 
   const activeProds = appState.products.filter(p => p.enabled && p.qty > 0);
   activeProds.forEach(p => {
-    wsData.push(['', '', p.code, p.name, p.qty, p.unit, p.price, p.price * (1 - (Number(appState.discountPercent) || 0) / 100), p.qty * p.price]);
+    const dp = p.price * (1 - (Number(appState.discountPercent) || 0) / 100);
+    wsData.push(['', '', p.code, p.name, p.qty, p.unit, p.price, p.qty * p.price, dp, dp * p.qty]);
   });
 
   wsData.push(['', '', '', '', '', '', 'Toplam', fin.grossTotal]);
