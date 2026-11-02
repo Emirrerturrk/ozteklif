@@ -203,10 +203,6 @@ const elements = {
   docTermsList: document.getElementById('doc-terms-list'),
 
   docTotalGross: document.getElementById('doc-total-gross'),
-  docDiscountRow: document.getElementById('doc-discount-row'),
-  docDiscountRate: document.getElementById('doc-discount-rate'),
-  docDiscountVal: document.getElementById('doc-discount-val'),
-  docNetTotal: document.getElementById('doc-net-total'),
   docVatRate: document.getElementById('doc-vat-rate'),
   docVatVal: document.getElementById('doc-vat-val'),
   docGrandTotal: document.getElementById('doc-grand-total'),
@@ -271,7 +267,8 @@ function calculateFinancials() {
   const grossTotal = activeProducts.reduce((acc, p) => acc + (Number(p.qty) || 0) * (Number(p.price) || 0), 0);
   const discountPercent = Number(appState.discountPercent) || 0;
   const discountAmount = grossTotal * (discountPercent / 100);
-  const netSubtotal = Math.max(0, grossTotal - discountAmount);
+  // Teklifteki toplamlar iskontosuz hesaplanir; iskonto yalnizca birim fiyat sutununda gorunur
+  const netSubtotal = grossTotal;
 
   const vatRate = appState.vatStatus === 'exempt' ? 0 : 20;
   let vatAmount = 0;
@@ -389,6 +386,7 @@ function updatePreview() {
       <td class="col-qty">${p.qty}</td>
       <td class="col-unit">${p.unit}</td>
       <td class="col-price">${formatNumber(p.price)} ₺</td>
+      <td class="col-price">${formatNumber((Number(p.price) || 0) * (1 - (Number(appState.discountPercent) || 0) / 100))} ₺</td>
       <td class="col-total">${formatNumber(lineTotal)} ₺</td>
     `;
     elements.docTableBody.appendChild(tr);
@@ -406,9 +404,6 @@ function updatePreview() {
 
   // Financials in Doc
   elements.docTotalGross.textContent = `${formatNumber(fin.grossTotal)} ₺`;
-  elements.docDiscountRate.textContent = fin.discountPercent;
-  elements.docDiscountVal.textContent = fin.discountPercent > 0 ? `-${formatNumber(fin.discountAmount)} ₺` : '0,00 ₺';
-  elements.docNetTotal.textContent = `${formatNumber(fin.netSubtotal)} ₺`;
   elements.docVatRate.textContent = fin.vatRate;
   elements.docVatVal.textContent = `${formatNumber(fin.vatAmount)} ₺`;
   elements.docGrandTotal.textContent = `${formatNumber(fin.grandTotal)} ₺`;
@@ -715,17 +710,15 @@ elements.btnExportExcel.addEventListener('click', () => {
     ['', '', 'Konu                 :', appState.quote.subject],
     ['', '', 'Sayın Yetkili ;'],
     ['', '', 'Firmanız / Sizin için hazırlamış olduğumuz teklif aşağıda bilgilerinize sunulmuştur.'],
-    ['', '', 'Ürün Kodu', 'Ürün Açıklaması', 'Miktar', 'Birim', 'Birim Fiyat', 'Tutar']
+    ['', '', 'Ürün Kodu', 'Ürün Açıklaması', 'Miktar', 'Birim', 'Birim Fiyat', 'İskontolu Birim Fiyat', 'Tutar']
   ];
 
   const activeProds = appState.products.filter(p => p.enabled && p.qty > 0);
   activeProds.forEach(p => {
-    wsData.push(['', '', p.code, p.name, p.qty, p.unit, p.price, p.qty * p.price]);
+    wsData.push(['', '', p.code, p.name, p.qty, p.unit, p.price, p.price * (1 - (Number(appState.discountPercent) || 0) / 100), p.qty * p.price]);
   });
 
   wsData.push(['', '', '', '', '', '', 'Toplam', fin.grossTotal]);
-  wsData.push(['', '', '', '', '', '', `İskonto % ${fin.discountPercent}`, fin.discountAmount]);
-  wsData.push(['', '', '', '', '', '', 'Tutar', fin.netSubtotal]);
   wsData.push(['', '', '', '', '', '', `Kdv (%${fin.vatRate})`, fin.vatAmount]);
   wsData.push(['', '', '', '', '', '', 'Toplam Tutar', fin.grandTotal]);
 
